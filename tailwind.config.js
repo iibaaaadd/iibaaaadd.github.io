@@ -13,6 +13,8 @@ module.exports = {
         third: "#B0A695",
         fourth: "#776B5D",
         ig: "#c13584",
+        wa: "#25D366",
+        line: "#00C300",
       },
       animation: {
         lentur: "lentur 3s linear infinite",
