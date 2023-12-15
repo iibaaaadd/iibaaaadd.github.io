@@ -1264,6 +1264,10 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.group:hover .group-hover\:border-none {
+  border-style: none;
+}
+
 .group:hover .group-hover\:bg-third {
   --tw-bg-opacity: 1;
   background-color: rgb(176 166 149 / var(--tw-bg-opacity));
