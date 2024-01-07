@@ -14,7 +14,7 @@ module.exports = {
         fourth: "#776B5D",
         ig: "#c13584",
         wa: "#25D366",
-        line: "#00C300",
+        line: "#000000",
       },
       animation: {
         lentur: "lentur 3s linear infinite",
