@@ -16,8 +16,17 @@ module.exports = {
         wa: "#25D366",
         line: "#000000",
       },
+      fontFamily: {
+        poppins: ["Poppins", "sans-serif"],
+        inter: ["Inter", "sans-serif"],
+      },
       animation: {
         lentur: "lentur 3s linear infinite",
+        "fade-in": "fadeIn 0.8s ease-in-out",
+        "slide-up": "slideUp 0.8s ease-out",
+        float: "float 6s ease-in-out infinite",
+        "bounce-subtle": "bounceSubtle 2s infinite",
+        "pulse-slow": "pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
       keyframes: {
         lentur: {
@@ -37,6 +46,22 @@ module.exports = {
             borderRadius: "30% 70% 70% 30% / 30% 30% 70% 70% ",
             backgroundColor: "#383838",
           },
+        },
+        fadeIn: {
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        slideUp: {
+          "0%": { opacity: "0", transform: "translateY(50px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-20px)" },
+        },
+        bounceSubtle: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
         },
       },
     },

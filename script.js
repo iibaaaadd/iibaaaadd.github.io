@@ -1,0 +1,584 @@
+/* ===================================
+   DARK PORTFOLIO - ENHANCED ANIMATIONS
+   =================================== */
+
+// DOM Content Loaded - Initialize Everything
+document.addEventListener("DOMContentLoaded", function () {
+  initializeTypedJS();
+  initializeAOS();
+  initializeSwiper();
+  initializeParticles();
+  setupScrollAnimations();
+  setupNavigation();
+  setupInteractiveElements();
+});
+
+// Initialize AOS (Animate On Scroll)
+function initializeAOS() {
+  AOS.init({
+    duration: 800,
+    once: false,
+    offset: 50,
+    easing: 'ease-out-cubic',
+    anchorPlacement: 'top-bottom',
+    disable: window.innerWidth < 768 ? true : false,
+    // Faster animations for footer and bottom elements
+    delay: function (el) {
+      // Faster animation for footer elements
+      if (el.closest('footer')) {
+        return 100;
+      }
+      // Default delay for other elements
+      return 200;
+    }
+  });
+
+  // Refresh AOS on window resize
+  window.addEventListener('resize', () => {
+    AOS.refresh();
+  });
+  
+  // Force refresh AOS when scrolling near footer
+  let footerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        // Trigger AOS refresh for faster footer animation
+        setTimeout(() => {
+          AOS.refresh();
+        }, 50);
+      }
+    });
+  }, { rootMargin: '100px' });
+
+  const footer = document.querySelector('footer');
+  if (footer) {
+    footerObserver.observe(footer);
+  }
+}
+
+// Enhanced Typed.js Animation
+function initializeTypedJS() {
+  new Typed("#typed-text", {
+    strings: [
+      "Full Stack Developer",
+      "Problem Solver",
+      "Tech Enthusiast",
+      "Code Architect",
+    ],
+    typeSpeed: 70,
+    backSpeed: 50,
+    backDelay: 1500,
+    startDelay: 500,
+    loop: true,
+    showCursor: true,
+    cursorChar: "_",
+    smartBackspace: true,
+    fadeOut: true,
+    fadeOutClass: 'typed-fade-out',
+    fadeOutDelay: 300,
+  });
+}
+
+// Enhanced Swiper with 3D Effects
+function initializeSwiper() {
+  const swiper = new Swiper(".projectSwiper", {
+    effect: 'coverflow',
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: 'auto',
+    loop: true,
+    autoplay: {
+      delay: 4000,
+      disableOnInteraction: false,
+      pauseOnMouseEnter: true
+    },
+    coverflowEffect: {
+      rotate: 20,
+      stretch: 0,
+      depth: 100,
+      modifier: 1,
+      slideShadows: true,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+      dynamicBullets: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    keyboard: {
+      enabled: true,
+    },
+    breakpoints: {
+      640: {
+        effect: 'slide',
+        slidesPerView: 2,
+        spaceBetween: 20,
+        coverflowEffect: {
+          rotate: 0,
+        }
+      },
+      1024: {
+        effect: 'coverflow',
+        slidesPerView: 3,
+        spaceBetween: 30,
+      },
+    },
+    on: {
+      slideChange: function() {
+        // Add custom animation when slide changes
+        this.slides.forEach((slide, index) => {
+          if (index === this.activeIndex) {
+            slide.style.transform += ' scale(1.05)';
+          } else {
+            slide.style.transform = slide.style.transform.replace(' scale(1.05)', '');
+          }
+        });
+      }
+    }
+  });
+}
+
+// Particle Background Animation
+function initializeParticles() {
+  const canvas = document.createElement('canvas');
+  canvas.id = 'particles-canvas';
+  canvas.style.position = 'fixed';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.zIndex = '-1';
+  canvas.style.pointerEvents = 'none';
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  const maxParticles = 50;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  function createParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      size: Math.random() * 2 + 1,
+      opacity: Math.random() * 0.5 + 0.2
+    };
+  }
+
+  function updateParticles() {
+    particles.forEach(particle => {
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+
+      if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+      if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+    });
+  }
+
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+    particles.forEach(particle => {
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0, 212, 255, ${particle.opacity})`;
+      ctx.fill();
+    });
+
+    // Draw connections
+    particles.forEach((particle, i) => {
+      particles.slice(i + 1).forEach(otherParticle => {
+        const dx = particle.x - otherParticle.x;
+        const dy = particle.y - otherParticle.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        if (distance < 100) {
+          ctx.beginPath();
+          ctx.moveTo(particle.x, particle.y);
+          ctx.lineTo(otherParticle.x, otherParticle.y);
+          ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 100)})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      });
+    });
+  }
+
+  function animate() {
+    updateParticles();
+    drawParticles();
+    requestAnimationFrame(animate);
+  }
+
+  // Initialize particles
+  for (let i = 0; i < maxParticles; i++) {
+    particles.push(createParticle());
+  }
+
+  resizeCanvas();
+  animate();
+
+  window.addEventListener('resize', resizeCanvas);
+}
+
+// Enhanced Mobile Menu with Animations
+function setupMobileMenu() {
+  const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const hamburgerLines = document.querySelectorAll(".hamburger-line");
+
+  mobileMenuBtn.addEventListener("click", function () {
+    const isOpen = mobileMenu.classList.contains('active');
+    
+    if (isOpen) {
+      // Close menu
+      mobileMenu.classList.remove('active');
+      mobileMenu.style.maxHeight = "0px";
+      hamburgerLines[0].style.transform = "rotate(0deg) translateY(0px)";
+      hamburgerLines[1].style.opacity = "1";
+      hamburgerLines[2].style.transform = "rotate(0deg) translateY(0px)";
+      
+      // Animate menu items out
+      const menuItems = mobileMenu.querySelectorAll('.mobile-nav-link');
+      menuItems.forEach((item, index) => {
+        setTimeout(() => {
+          item.style.transform = 'translateX(-100px)';
+          item.style.opacity = '0';
+        }, index * 50);
+      });
+    } else {
+      // Open menu
+      mobileMenu.classList.add('active');
+      mobileMenu.style.maxHeight = mobileMenu.scrollHeight + "px";
+      hamburgerLines[0].style.transform = "rotate(45deg) translateY(8px)";
+      hamburgerLines[1].style.opacity = "0";
+      hamburgerLines[2].style.transform = "rotate(-45deg) translateY(-8px)";
+      
+      // Animate menu items in
+      const menuItems = mobileMenu.querySelectorAll('.mobile-nav-link');
+      menuItems.forEach((item, index) => {
+        setTimeout(() => {
+          item.style.transform = 'translateX(0)';
+          item.style.opacity = '1';
+        }, index * 100 + 200);
+      });
+    }
+  });
+
+  // Close menu when clicking links
+  document.querySelectorAll(".mobile-nav-link").forEach((link) => {
+    link.addEventListener("click", function () {
+      mobileMenu.classList.remove('active');
+      mobileMenu.style.maxHeight = "0px";
+      hamburgerLines[0].style.transform = "rotate(0deg) translateY(0px)";
+      hamburgerLines[1].style.opacity = "1";
+      hamburgerLines[2].style.transform = "rotate(0deg) translateY(0px)";
+    });
+  });
+}
+
+// Enhanced Scroll Animations
+function setupScrollAnimations() {
+  // Scroll Progress Indicator with Smooth Animation
+  let ticking = false;
+  
+  function updateScrollProgress() {
+    const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    document.getElementById("scrollIndicator").style.transform = `scaleX(${scrolled / 100})`;
+    ticking = false;
+  }
+
+  window.addEventListener("scroll", function() {
+    if (!ticking) {
+      requestAnimationFrame(updateScrollProgress);
+      ticking = true;
+    }
+  });
+
+  // Enhanced Navbar Animation
+  let lastScrollY = window.scrollY;
+  const navbar = document.getElementById("navbar");
+  
+  window.addEventListener("scroll", function() {
+    const currentScrollY = window.scrollY;
+    
+    if (currentScrollY > 100) {
+      navbar.classList.add('scrolled');
+      
+      // Hide navbar on scroll down, show on scroll up
+      if (currentScrollY > lastScrollY && currentScrollY > 200) {
+        navbar.style.transform = 'translateY(-100%)';
+      } else {
+        navbar.style.transform = 'translateY(0)';
+      }
+    } else {
+      navbar.classList.remove('scrolled');
+      navbar.style.transform = 'translateY(0)';
+    }
+    
+    lastScrollY = currentScrollY;
+  });
+}
+
+// Enhanced Navigation
+function setupNavigation() {
+  // Back to Top Button with Pulse Animation
+  const backToTopBtn = document.getElementById("backToTop");
+  
+  window.addEventListener("scroll", function () {
+    if (window.pageYOffset > 300) {
+      backToTopBtn.classList.remove("opacity-0", "invisible");
+      backToTopBtn.classList.add("opacity-100", "visible");
+    } else {
+      backToTopBtn.classList.add("opacity-0", "invisible");
+      backToTopBtn.classList.remove("opacity-100", "visible");
+    }
+  });
+
+  backToTopBtn.addEventListener("click", function () {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    
+    // Add click animation
+    this.style.transform = 'scale(0.9)';
+    setTimeout(() => {
+      this.style.transform = 'scale(1)';
+    }, 150);
+  });
+
+  // Enhanced Smooth Scrolling
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      const targetId = this.getAttribute("href");
+      const targetElement = document.querySelector(targetId);
+
+      if (targetElement) {
+        const headerOffset = 80;
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        // Add loading animation to the link
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = 'scale(1)';
+        }, 200);
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth",
+        });
+      }
+    });
+  });
+
+  // Active Navigation with Smooth Transitions
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  const observerOptions = {
+    threshold: 0.3,
+    rootMargin: '-80px 0px -80px 0px'
+  };
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${entry.target.id}`) {
+            link.classList.add("active");
+          }
+        });
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach(section => {
+    sectionObserver.observe(section);
+  });
+
+  setupMobileMenu();
+}
+
+// Interactive Elements Enhancement
+function setupInteractiveElements() {
+  // Enhanced Card Hover Effects
+  const cards = document.querySelectorAll('.card, .project-card, .certificate-card, .glass-card');
+  
+  cards.forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-10px) scale(1.02)';
+      this.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0) scale(1)';
+    });
+  });
+
+  // Enhanced Button Interactions
+  const buttons = document.querySelectorAll('.btn-primary, .btn-secondary');
+  
+  buttons.forEach(button => {
+    button.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-3px)';
+      this.style.boxShadow = '0 10px 30px rgba(0, 212, 255, 0.4)';
+    });
+    
+    button.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0)';
+      this.style.boxShadow = '0 4px 15px rgba(0, 212, 255, 0.3)';
+    });
+    
+    button.addEventListener('click', function() {
+      // Ripple effect
+      const ripple = document.createElement('span');
+      ripple.style.position = 'absolute';
+      ripple.style.borderRadius = '50%';
+      ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+      ripple.style.transform = 'scale(0)';
+      ripple.style.animation = 'ripple 0.6s linear';
+      ripple.style.left = '50%';
+      ripple.style.top = '50%';
+      ripple.style.width = ripple.style.height = '20px';
+      ripple.style.marginLeft = ripple.style.marginTop = '-10px';
+      
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+
+  // Skill Icons Interactive Animation
+  const skillIcons = document.querySelectorAll('.skill-icon');
+  
+  skillIcons.forEach(icon => {
+    icon.addEventListener('mouseenter', function() {
+      this.style.transform = 'scale(1.2) rotate(10deg)';
+      this.style.filter = 'drop-shadow(0 5px 15px rgba(0, 212, 255, 0.5))';
+    });
+    
+    icon.addEventListener('mouseleave', function() {
+      this.style.transform = 'scale(1) rotate(0deg)';
+      this.style.filter = 'grayscale(0.3)';
+    });
+  });
+}
+
+// Enhanced Certificate Filtering with Animations
+function filterCertificates(category) {
+  // Update active button state with smooth transition
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+    btn.style.transform = 'scale(1)';
+  });
+  
+  event.target.classList.add('active');
+  event.target.style.transform = 'scale(1.05)';
+  
+  setTimeout(() => {
+    event.target.style.transform = 'scale(1)';
+  }, 200);
+
+  // Filter certificates with staggered animation
+  const certificates = document.querySelectorAll('.certificate-card');
+  
+  // First fade out all certificates
+  certificates.forEach((cert, index) => {
+    setTimeout(() => {
+      cert.style.opacity = '0';
+      cert.style.transform = 'translateY(20px)';
+    }, index * 50);
+  });
+
+  // Then show/hide and fade in relevant ones
+  setTimeout(() => {
+    certificates.forEach((cert, index) => {
+      if (category === 'all' || cert.getAttribute('data-category') === category) {
+        cert.style.display = 'block';
+        setTimeout(() => {
+          cert.style.opacity = '1';
+          cert.style.transform = 'translateY(0)';
+          cert.classList.add('animate-fade-in');
+        }, index * 100);
+      } else {
+        cert.style.display = 'none';
+      }
+    });
+  }, 300);
+}
+
+// Cursor Trail Effect
+function initializeCursorTrail() {
+  const trail = [];
+  const maxTrail = 10;
+  
+  document.addEventListener('mousemove', (e) => {
+    trail.push({ x: e.clientX, y: e.clientY, opacity: 1 });
+    
+    if (trail.length > maxTrail) {
+      trail.shift();
+    }
+    
+    // Update existing trail elements
+    document.querySelectorAll('.cursor-trail').forEach((el, index) => {
+      if (trail[index]) {
+        el.style.left = trail[index].x + 'px';
+        el.style.top = trail[index].y + 'px';
+        el.style.opacity = trail[index].opacity * (index / maxTrail);
+      }
+    });
+    
+    // Create trail elements if they don't exist
+    while (document.querySelectorAll('.cursor-trail').length < trail.length) {
+      const trailElement = document.createElement('div');
+      trailElement.classList.add('cursor-trail');
+      trailElement.style.position = 'fixed';
+      trailElement.style.width = '4px';
+      trailElement.style.height = '4px';
+      trailElement.style.background = 'rgba(0, 212, 255, 0.6)';
+      trailElement.style.borderRadius = '50%';
+      trailElement.style.pointerEvents = 'none';
+      trailElement.style.zIndex = '9999';
+      trailElement.style.transition = 'opacity 0.3s ease';
+      document.body.appendChild(trailElement);
+    }
+  });
+}
+
+// Initialize cursor trail on desktop devices
+if (window.innerWidth > 768) {
+  initializeCursorTrail();
+}
+
+// Add CSS for ripple animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+  
+  .typed-fade-out {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+`;
+document.head.appendChild(style);
+
