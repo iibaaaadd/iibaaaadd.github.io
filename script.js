@@ -288,12 +288,25 @@ function setupMobileMenu() {
 
 // Enhanced Scroll Animations
 function setupScrollAnimations() {
-  // Scroll Progress Indicator with Smooth Animation
+  // Scroll Progress Indicator with Optimized Performance for Mobile
   let ticking = false;
+  let lastScrollTime = 0;
+  const scrollIndicator = document.getElementById("scrollIndicator");
   
   function updateScrollProgress() {
+    const now = performance.now();
+    
+    // Throttle updates for better mobile performance (60fps max)
+    if (now - lastScrollTime < 16) {
+      requestAnimationFrame(updateScrollProgress);
+      return;
+    }
+    
+    lastScrollTime = now;
     const scrolled = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-    document.getElementById("scrollIndicator").style.transform = `scaleX(${scrolled / 100})`;
+    
+    // Use transform3d for better mobile performance
+    scrollIndicator.style.transform = `scaleX(${Math.min(scrolled / 100, 1)}) translateZ(0)`;
     ticking = false;
   }
 
@@ -302,7 +315,7 @@ function setupScrollAnimations() {
       requestAnimationFrame(updateScrollProgress);
       ticking = true;
     }
-  });
+  }, { passive: true }); // Passive listener for better mobile performance
 
   // Enhanced Navbar Animation
   let lastScrollY = window.scrollY;

@@ -241,10 +241,28 @@ body::after {
   height: 4px;
   background: var(--gradient-primary);
   transform-origin: left;
-  transform: scaleX(0);
-  transition: transform var(--transition-medium);
+  transform: scaleX(0) translateZ(0);
   z-index: 9999;
   box-shadow: 0 0 10px var(--accent-primary);
+  /* Optimized for smooth scrolling on mobile */
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  /* Prevent subpixel rendering issues on mobile */
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
+  contain: layout style paint;
+}
+
+/* Mobile-specific optimizations */
+@media (max-width: 768px) {
+  .scroll-indicator {
+    height: 3px;
+    /* Reduce visual complexity on mobile */
+    box-shadow: 0 0 5px var(--accent-primary);
+  }
 }
 
 /* ===========================
