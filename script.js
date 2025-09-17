@@ -16,26 +16,48 @@ document.addEventListener("DOMContentLoaded", function () {
 // Initialize AOS (Animate On Scroll)
 function initializeAOS() {
   AOS.init({
-    duration: 800,
+    duration: window.innerWidth < 768 ? 400 : 800, // Faster on mobile
     once: false,
-    offset: 50,
+    offset: window.innerWidth < 768 ? 30 : 50, // Lower offset on mobile
     easing: 'ease-out-cubic',
     anchorPlacement: 'top-bottom',
-    disable: window.innerWidth < 768 ? true : false,
-    // Faster animations for footer and bottom elements
+    disable: false, // Enable on mobile but with faster animations
+    // Reduced delays for mobile
     delay: function (el) {
+      const isMobile = window.innerWidth < 768;
+      
       // Faster animation for footer elements
       if (el.closest('footer')) {
-        return 100;
+        return isMobile ? 50 : 100;
       }
+      
+      // Faster experience section animations on mobile
+      if (el.closest('#experience')) {
+        return isMobile ? 50 : 100;
+      }
+      
       // Default delay for other elements
-      return 200;
+      return isMobile ? 100 : 200;
     }
   });
 
-  // Refresh AOS on window resize
+  // Refresh AOS on window resize with responsive settings
+  let resizeTimeout;
+  let wasMobile = window.innerWidth < 768;
+  
   window.addEventListener('resize', () => {
-    AOS.refresh();
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      const isMobile = window.innerWidth < 768;
+      
+      // Reinitialize if switching between mobile/desktop
+      if (isMobile !== wasMobile) {
+        wasMobile = isMobile;
+        initializeAOS();
+      } else {
+        AOS.refresh();
+      }
+    }, 250);
   });
   
   // Force refresh AOS when scrolling near footer
