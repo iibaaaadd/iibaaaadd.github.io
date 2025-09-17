@@ -128,9 +128,6 @@
         style="animation-delay: 3s;" />
     </svg>
   </div>
-
-  <!-- Scroll Progress Indicator -->
-  <div class="scroll-indicator" id="scrollIndicator"></div>
   </head>
 
   <body class="dark bg-slate-900 text-slate-100 overflow-x-hidden">
@@ -153,6 +150,7 @@
           <nav class="desktop-nav hidden lg:flex items-center space-x-8" data-aos="fade-left">
             <a href="#home" class="nav-link">Home</a>
             <a href="#profile" class="nav-link">Profile</a>
+            <a href="#experience" class="nav-link">Experience</a>
             <a href="#project" class="nav-link">Projects</a>
             <a href="#certificate" class="nav-link">Certificates</a>
             <a href="#contact" class="nav-link">Contact</a>
@@ -173,6 +171,7 @@
           <div class="py-4 space-y-2">
             <a href="#home" class="mobile-nav-link">Home</a>
             <a href="#profile" class="mobile-nav-link">Profile</a>
+            <a href="#experience" class="mobile-nav-link">Experience</a>
             <a href="#project" class="mobile-nav-link">Projects</a>
             <a href="#certificate" class="mobile-nav-link">Certificates</a>
             <a href="#contact" class="mobile-nav-link">Contact</a>
@@ -395,6 +394,154 @@
       </div>
     </section>
 
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12 sm:mb-16">
+          <h2 class="section-title" data-aos="fade-up">Professional Experience</h2>
+          <p class="text-base sm:text-lg max-w-2xl mx-auto" style="color: var(--text-secondary);" data-aos="fade-up"
+            data-aos-delay="200">
+            My journey through internships, research, and professional development
+          </p>
+        </div>
+
+        <!-- Experience Timeline -->
+        <div class="relative max-w-4xl mx-auto">
+          <!-- Timeline Line -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 via-purple-500 to-cyan-500 rounded-full hidden md:block"></div>
+
+          <!-- Experience Items -->
+          <div class="space-y-8 md:space-y-12">
+            <!-- Freelance Developer -->
+            <div class="relative flex flex-col md:flex-row items-center" data-aos="fade-up" data-aos-delay="200">
+              <div class="md:w-1/2 md:pr-8 mb-6 md:mb-0 md:text-right order-2 md:order-1">
+                <div class="glass-card p-6 hover-lift group">
+                  <div class="flex items-center justify-between mb-3 md:flex-row-reverse">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-full flex items-center justify-center">
+                      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                      </svg>
+                    </div>
+                    <div class="md:mr-4">
+                      <h3 class="text-xl font-bold mb-1" style="color: var(--text-primary);">Fullstack Developer</h3>
+                      <p class="text-purple-400 font-medium">Naungan Cons Code (Freelance)</p>
+                    </div>
+                  </div>
+                  <p class="text-sm text-green-400 font-medium mb-3">August 2023 - Present</p>
+                  <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                    Working as a freelance fullstack developer, creating custom web applications using modern technologies like Laravel, Vue.js, and React. Developing end-to-end solutions from database design to frontend implementation.
+                  </p>
+                  <div class="mt-3 flex flex-wrap gap-2 justify-end md:justify-start">
+                    <span class="tech-tag text-xs">Laravel</span>
+                    <span class="tech-tag text-xs">Vue.js</span>
+                    <span class="tech-tag text-xs">React</span>
+                    <span class="tech-tag text-xs">MySQL</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Timeline Dot -->
+              <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-purple-500 border-4 border-gray-900 rounded-full z-10"></div>
+              <div class="md:w-1/2 md:pl-8 order-1 md:order-2"></div>
+            </div>
+
+            <!-- PUSPAGA Research -->
+            <div class="relative flex flex-col md:flex-row items-center" data-aos="fade-up" data-aos-delay="400">
+              <div class="md:w-1/2 md:pr-8 order-1"></div>
+              <!-- Timeline Dot -->
+              <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-yellow-500 border-4 border-gray-900 rounded-full z-10"></div>
+              <div class="md:w-1/2 md:pl-8 mb-6 md:mb-0 order-2">
+                <div class="glass-card p-6 hover-lift group">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-orange-600 rounded-full flex items-center justify-center">
+                      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                    </div>
+                    <div class="ml-4">
+                      <h3 class="text-xl font-bold mb-1" style="color: var(--text-primary);">Thesis Researcher</h3>
+                      <p class="text-yellow-400 font-medium">PUSPAGA Surabaya</p>
+                    </div>
+                  </div>
+                  <p class="text-sm text-green-400 font-medium mb-3">February - April 2025</p>
+                  <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                    Conducted thesis research at Family Learning Center (PUSPAGA) Surabaya, focusing on developing innovative solutions for family services and community engagement through technology integration.
+                  </p>
+                  <div class="mt-3 flex flex-wrap gap-2">
+                    <span class="tech-tag text-xs">Research</span>
+                    <span class="tech-tag text-xs">Data Analysis</span>
+                    <span class="tech-tag text-xs">OCR Technology</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- MSIB 7 - DP3APPKB -->
+            <div class="relative flex flex-col md:flex-row items-center" data-aos="fade-up" data-aos-delay="600">
+              <div class="md:w-1/2 md:pr-8 mb-6 md:mb-0 md:text-right order-2 md:order-1">
+                <div class="glass-card p-6 hover-lift group">
+                  <div class="flex items-center justify-between mb-3 md:flex-row-reverse">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-teal-600 rounded-full flex items-center justify-center">
+                      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                      </svg>
+                    </div>
+                    <div class="md:mr-4">
+                      <h3 class="text-xl font-bold mb-1" style="color: var(--text-primary);">IT Crew</h3>
+                      <p class="text-green-400 font-medium">DP3APPKB Surabaya (MSIB Batch 7)</p>
+                    </div>
+                  </div>
+                  <p class="text-sm text-green-400 font-medium mb-3">September - December 2024</p>
+                  <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                    Participated in MSIB Batch 7 program as IT Crew at DP3APPKB Surabaya. Responsible for maintaining IT infrastructure, developing internal systems, and providing technical support for government operations.
+                  </p>
+                  <div class="mt-3 flex flex-wrap gap-2 justify-end md:justify-start">
+                    <span class="tech-tag text-xs">IT Support</span>
+                    <span class="tech-tag text-xs">System Admin</span>
+                    <span class="tech-tag text-xs">Database</span>
+                  </div>
+                </div>
+              </div>
+              <!-- Timeline Dot -->
+              <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-green-500 border-4 border-gray-900 rounded-full z-10"></div>
+              <div class="md:w-1/2 md:pl-8 order-1 md:order-2"></div>
+            </div>
+
+            <!-- MSIB 6 - Dinkominfo -->
+            <div class="relative flex flex-col md:flex-row items-center" data-aos="fade-up" data-aos-delay="800">
+              <div class="md:w-1/2 md:pr-8 order-1"></div>
+              <!-- Timeline Dot -->
+              <div class="hidden md:flex absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-blue-500 border-4 border-gray-900 rounded-full z-10"></div>
+              <div class="md:w-1/2 md:pl-8 mb-6 md:mb-0 order-2">
+                <div class="glass-card p-6 hover-lift group">
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center">
+                      <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                      </svg>
+                    </div>
+                    <div class="ml-4">
+                      <h3 class="text-xl font-bold mb-1" style="color: var(--text-primary);">Software Developer</h3>
+                      <p class="text-blue-400 font-medium">Dinkominfo Surabaya (MSIB Batch 6)</p>
+                    </div>
+                  </div>
+                  <p class="text-sm text-green-400 font-medium mb-3">February - July 2024</p>
+                  <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
+                    Participated in MSIB Batch 6 program as a Software Developer at Surabaya Communication and Information Department. Developed government web applications and contributed to digital transformation initiatives.
+                  </p>
+                  <div class="mt-3 flex flex-wrap gap-2">
+                    <span class="tech-tag text-xs">PHP</span>
+                    <span class="tech-tag text-xs">Laravel</span>
+                    <span class="tech-tag text-xs">JavaScript</span>
+                    <span class="tech-tag text-xs">MySQL</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Projects Section -->
     <section id="project" class="section">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -407,12 +554,12 @@
         </div>
 
         <!-- Swiper Container -->
-        <div class="swiper projectSwiper overflow-hidden" data-aos="fade-up" data-aos-delay="400">
+        <div class="swiper projectSwiper" data-aos="fade-up" data-aos-delay="400">
           <div class="swiper-wrapper">
             <!-- Project Cards -->
             <div class="swiper-slide">
               <div class="project-card group h-[32rem] flex flex-col">
-                <div class="aspect-video w-full relative">
+                <div class="project-image-container">
                   <img src="Img/Leave-Management.png" alt="Leave Management" class="project-image">
                   <div
                     class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -441,7 +588,7 @@
 
             <div class="swiper-slide">
               <div class="project-card group h-[32rem] flex flex-col">
-                <div class="aspect-video w-full relative">
+                <div class="project-image-container">
                   <img src="Img/E-Building2.png" alt="E-Building" class="project-image">
                   <div
                     class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -461,101 +608,87 @@
                       improvement aspects and facilitates efficient building management.</p>
                   </div>
                   <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-red-500/20 text-red-400 text-xs rounded-full">Laravel</span>
-                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">MySQL</span>
-                    <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">JavaScript</span>
+                    <span class="tech-tag">Laravel</span>
+                    <span class="tech-tag">MySQL</span>
+                    <span class="tech-tag">JavaScript</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="swiper-slide">
-              <div class="glass-effect rounded-2xl overflow-hidden hover-lift group h-[32rem] flex flex-col">
-                <div class="aspect-video w-full relative">
-                  <img src="Img/Yasoge.png" alt="Yasoge" class="w-full h-full object-cover">
+              <div class="project-card group h-[32rem] flex flex-col">
+                <div class="project-image-container">
+                  <img src="Img/Yasoge.png" alt="Yasoge" class="project-image">
                   <div
                     class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   </div>
                 </div>
-                <div class="p-6 flex flex-col flex-grow">
+                <div class="project-content flex flex-col flex-grow">
                   <div class="flex-grow">
-                    <h3 class="text-xl font-bold mb-3 group-hover:text-blue-400 transition-colors"
-                      style="color: var(--text-primary);">
+                    <h3 class="project-title group-hover:text-blue-400 transition-colors">
                       Yasoge
                     </h3>
-                    <p class="text-sm leading-relaxed line-clamp-4" style="color: var(--text-secondary);">Advanced
-                      invoice creation system for
-                      shoe products
-                      implementing Point of Sale (POS) methodology. Built with the latest Laravel 11 framework and
-                      styled
-                      with
-                      Bootstrap 5 for a modern, responsive interface.</p>
+                    <p class="project-description line-clamp-4">
+                      Advanced invoice creation system for shoe products implementing Point of Sale (POS) methodology. Built with the latest Laravel 11 framework and styled with Bootstrap 5 for a modern, responsive interface.
+                    </p>
                   </div>
                   <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-red-500/20 text-red-400 text-xs rounded-full">Laravel</span>
-                    <span class="px-3 py-1 bg-purple-500/20 text-purple-400 text-xs rounded-full">Bootstrap</span>
-                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">MySQL</span>
+                    <span class="tech-tag">Laravel</span>
+                    <span class="tech-tag">Bootstrap</span>
+                    <span class="tech-tag">MySQL</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="swiper-slide">
-              <div class="glass-effect rounded-2xl overflow-hidden hover-lift group h-[32rem] flex flex-col">
-                <div class="aspect-video w-full relative">
-                  <img src="Img/MI.png" alt="Management Inventory" class="w-full h-full object-cover">
+              <div class="project-card group h-[32rem] flex flex-col">
+                <div class="project-image-container">
+                  <img src="Img/MI.png" alt="Management Inventory" class="project-image">
                   <div
                     class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   </div>
                 </div>
-                <div class="p-6 flex flex-col flex-grow">
+                <div class="project-content flex flex-col flex-grow">
                   <div class="flex-grow">
-                    <h3 class="text-xl font-bold mb-3 group-hover:text-blue-400 transition-colors"
-                      style="color: var(--text-primary);">
+                    <h3 class="project-title group-hover:text-blue-400 transition-colors">
                       Management Inventory
                     </h3>
-                    <p class="text-sm leading-relaxed line-clamp-4" style="color: var(--text-secondary);">Full-stack
-                      inventory management system
-                      with
-                      API-first approach. Features include CRUD operations, stock management, transaction processing,
-                      automated
-                      notifications, and comprehensive reporting system.</p>
+                    <p class="project-description line-clamp-4">
+                      Full-stack inventory management system with API-first approach. Features include CRUD operations, stock management, transaction processing, automated notifications, and comprehensive reporting system.
+                    </p>
                   </div>
                   <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">Node.js</span>
-                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">Next.js</span>
-                    <span class="px-3 py-1 bg-indigo-500/20 text-indigo-400 text-xs rounded-full">PostgreSQL</span>
+                    <span class="tech-tag">Node.js</span>
+                    <span class="tech-tag">Next.js</span>
+                    <span class="tech-tag">PostgreSQL</span>
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="swiper-slide">
-              <div class="glass-effect rounded-2xl overflow-hidden hover-lift group h-[32rem] flex flex-col">
-                <div class="aspect-video w-full relative bg-gradient-to-br from-yellow-400 to-orange-500">
-                  <div class="absolute inset-0 flex items-center justify-center text-6xl"><img src="Img/Selamat Datang Buku Tamu.png"
-                      alt="PUSPAGA Guestbook" class="w-full h-full object-cover"></div>
+              <div class="project-card group h-[32rem] flex flex-col">
+                <div class="project-image-container bg-gradient-to-br from-yellow-400 to-orange-500">
+                  <img src="Img/Selamat Datang Buku Tamu.png" alt="PUSPAGA Guestbook" class="project-image">
                   <div
                     class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   </div>
                 </div>
-                <div class="p-6 flex flex-col flex-grow">
+                <div class="project-content flex flex-col flex-grow">
                   <div class="flex-grow">
-                    <h3 class="text-xl font-bold mb-3 group-hover:text-blue-400 transition-colors"
-                      style="color: var(--text-primary);">
+                    <h3 class="project-title group-hover:text-blue-400 transition-colors">
                       PUSPAGA Guestbook
                     </h3>
-                    <p class="text-sm leading-relaxed line-clamp-4" style="color: var(--text-secondary);">Advanced
-                      guestbook system featuring OCR
-                      technology
-                      for automatic ID card data extraction at Family Learning Centers. Streamlines visitor registration
-                      and
-                      improves data accuracy.</p>
+                    <p class="project-description line-clamp-4">
+                      Advanced guestbook system featuring OCR technology for automatic ID card data extraction at Family Learning Centers. Streamlines visitor registration and improves data accuracy.
+                    </p>
                   </div>
                   <div class="mt-4 flex flex-wrap gap-2">
-                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs rounded-full">OCR</span>
-                    <span class="px-3 py-1 bg-green-500/20 text-green-400 text-xs rounded-full">PHP</span>
-                    <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs rounded-full">JavaScript</span>
+                    <span class="tech-tag">OCR</span>
+                    <span class="tech-tag">PHP</span>
+                    <span class="tech-tag">JavaScript</span>
                   </div>
                 </div>
               </div>

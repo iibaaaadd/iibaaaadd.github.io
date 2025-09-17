@@ -83,10 +83,11 @@ function initializeTypedJS() {
 function initializeSwiper() {
   const swiper = new Swiper(".projectSwiper", {
     effect: 'coverflow',
-    grabCursor: true,
+    grabCursor: false, // Disabled to allow hover events
     centeredSlides: true,
     slidesPerView: 'auto',
     loop: true,
+    allowTouchMove: true, // Still allow touch/drag but not grab cursor
     autoplay: {
       delay: 4000,
       disableOnInteraction: false,
@@ -103,10 +104,6 @@ function initializeSwiper() {
       el: ".swiper-pagination",
       clickable: true,
       dynamicBullets: true,
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
     },
     keyboard: {
       enabled: true,
@@ -400,26 +397,108 @@ function setupNavigation() {
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".nav-link");
 
+  // More forgiving observer options
   const observerOptions = {
-    threshold: 0.3,
-    rootMargin: '-80px 0px -80px 0px'
+    threshold: [0.1, 0.25, 0.5], // Multiple thresholds for better detection
+    rootMargin: '-20% 0px -20% 0px' // Less restrictive margins
   };
 
+  let currentActiveSection = null;
+
   const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        navLinks.forEach(link => {
-          link.classList.remove("active");
-          if (link.getAttribute("href") === `#${entry.target.id}`) {
-            link.classList.add("active");
-          }
-        });
-      }
-    });
+    // Sort entries by intersection ratio (highest first)
+    entries.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+    
+    // Find the most visible section
+    const mostVisible = entries.find(entry => entry.isIntersecting);
+    
+    if (mostVisible && mostVisible.target.id !== currentActiveSection) {
+      const sectionId = mostVisible.target.id;
+      currentActiveSection = sectionId;
+      
+      console.log('Section detected:', sectionId, 'Ratio:', mostVisible.intersectionRatio);
+      
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        const linkHref = link.getAttribute("href");
+        if (linkHref === `#${sectionId}`) {
+          link.classList.add("active");
+          console.log('Activated nav link:', linkHref);
+        }
+      });
+    }
   }, observerOptions);
 
   sections.forEach(section => {
+    console.log('Observing section:', section.id); // Debug log
     sectionObserver.observe(section);
+  });
+
+  // Fallback scroll-based detection
+  let ticking = false;
+
+  function updateActiveNavOnScroll() {
+    const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.id;
+
+      if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+        if (currentActiveSection !== sectionId) {
+          currentActiveSection = sectionId;
+          
+          navLinks.forEach(link => {
+            link.classList.remove("active");
+            if (link.getAttribute("href") === `#${sectionId}`) {
+              link.classList.add("active");
+              console.log('Scroll activated nav link:', `#${sectionId}`);
+            }
+          });
+        }
+      }
+    });
+
+    ticking = false;
+  }
+
+  function requestScrollUpdate() {
+    if (!ticking) {
+      requestAnimationFrame(updateActiveNavOnScroll);
+      ticking = true;
+    }
+  }
+
+  // Add scroll listener as backup
+  window.addEventListener('scroll', requestScrollUpdate, { passive: true });
+
+  // Initial check
+  updateActiveNavOnScroll();
+
+  // Manual click handler for nav links
+  navLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      
+      if (targetId && targetId.startsWith('#')) {
+        e.preventDefault();
+        
+        // Update active state immediately
+        navLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+        currentActiveSection = targetId.substring(1);
+        
+        // Smooth scroll to target
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          targetSection.scrollIntoView({ 
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }
+    });
   });
 
   setupMobileMenu();
