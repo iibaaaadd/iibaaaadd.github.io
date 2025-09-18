@@ -2,6 +2,45 @@
    DARK PORTFOLIO - ENHANCED ANIMATIONS
    =================================== */
 
+// Enhanced smooth scroll function for cross-browser compatibility
+function smoothScrollTo(targetElement) {
+  if (!targetElement) return;
+
+  // Get the target position
+  const targetPosition = targetElement.offsetTop;
+  const startPosition = window.pageYOffset;
+  const distance = targetPosition - startPosition;
+  const duration = 800; // 800ms for smooth animation
+  let start = null;
+
+  function animation(currentTime) {
+    if (start === null) start = currentTime;
+    const timeElapsed = currentTime - start;
+    const run = ease(timeElapsed, startPosition, distance, duration);
+    window.scrollTo(0, run);
+    if (timeElapsed < duration) requestAnimationFrame(animation);
+  }
+
+  // Easing function for smooth animation
+  function ease(t, b, c, d) {
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t + b;
+    t--;
+    return -c / 2 * (t * (t - 2) - 1) + b;
+  }
+
+  // Use native smooth scroll if supported, otherwise use custom animation
+  if ('scrollBehavior' in document.documentElement.style) {
+    targetElement.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start',
+      inline: 'nearest'
+    });
+  } else {
+    requestAnimationFrame(animation);
+  }
+}
+
 // DOM Content Loaded - Initialize Everything
 document.addEventListener("DOMContentLoaded", function () {
   initializeTypedJS();
@@ -376,11 +415,28 @@ function setupNavigation() {
     }
   });
 
-  backToTopBtn.addEventListener("click", function () {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+  backToTopBtn.addEventListener("click", function (e) {
+    e.preventDefault(); // Prevent default behavior
+    
+    // Enhanced smooth scroll to home section
+    const homeSection = document.getElementById('home');
+    if (homeSection) {
+      smoothScrollTo(homeSection);
+    } else {
+      // Fallback to window scroll
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    }
+    
+    // Update navigation state
+    const navLinks = document.querySelectorAll('.nav-link');
+    navLinks.forEach(l => l.classList.remove('active'));
+    const homeNavLink = document.querySelector('a[href="#home"].nav-link');
+    if (homeNavLink) {
+      homeNavLink.classList.add('active');
+    }
     
     // Add click animation
     this.style.transform = 'scale(0.9)';
@@ -511,13 +567,68 @@ function setupNavigation() {
         this.classList.add('active');
         currentActiveSection = targetId.substring(1);
         
-        // Smooth scroll to target
+        // Enhanced smooth scroll to target
         const targetSection = document.querySelector(targetId);
         if (targetSection) {
-          targetSection.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-          });
+          smoothScrollTo(targetSection);
+        }
+      }
+    });
+  });
+
+  // Handle logo click specifically
+  const logoLink = document.querySelector('.logo');
+  if (logoLink) {
+    logoLink.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      
+      if (targetId && targetId.startsWith('#')) {
+        e.preventDefault();
+        
+        // Update active state for home
+        navLinks.forEach(l => l.classList.remove('active'));
+        const homeNavLink = document.querySelector('a[href="#home"].nav-link');
+        if (homeNavLink) {
+          homeNavLink.classList.add('active');
+        }
+        currentActiveSection = 'home';
+        
+        // Enhanced smooth scroll to home/hero section
+        const homeSection = document.querySelector('#home');
+        if (homeSection) {
+          smoothScrollTo(homeSection);
+        }
+      }
+    });
+  }
+
+  // Handle mobile nav links
+  const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+  mobileNavLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const targetId = this.getAttribute('href');
+      
+      if (targetId && targetId.startsWith('#')) {
+        e.preventDefault();
+        
+        // Close mobile menu
+        const mobileMenu = document.getElementById('mobileMenu');
+        if (mobileMenu) {
+          mobileMenu.classList.remove('active');
+        }
+        
+        // Update active state
+        navLinks.forEach(l => l.classList.remove('active'));
+        const correspondingNavLink = document.querySelector(`a[href="${targetId}"].nav-link`);
+        if (correspondingNavLink) {
+          correspondingNavLink.classList.add('active');
+        }
+        currentActiveSection = targetId.substring(1);
+        
+        // Enhanced smooth scroll
+        const targetSection = document.querySelector(targetId);
+        if (targetSection) {
+          smoothScrollTo(targetSection);
         }
       }
     });
