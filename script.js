@@ -696,3 +696,46 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+// Handle certificate image loading errors
+function handleCertificateImageErrors() {
+  const certificateImages = document.querySelectorAll('.certificate-card img');
+  
+  certificateImages.forEach(img => {
+    img.addEventListener('error', function() {
+      console.log('Failed to load image:', this.src);
+      
+      // Hide the image
+      this.style.display = 'none';
+      
+      // Show fallback if it exists
+      const fallback = this.nextElementSibling;
+      if (fallback && fallback.classList.contains('hidden')) {
+        fallback.classList.remove('hidden');
+        fallback.classList.add('flex');
+      } else {
+        // Create a fallback if none exists
+        const container = this.parentElement;
+        const fallbackDiv = document.createElement('div');
+        fallbackDiv.className = 'w-full h-full bg-gradient-to-br from-purple-500/20 to-indigo-500/20 rounded-lg flex items-center justify-center text-purple-400';
+        fallbackDiv.innerHTML = `
+          <div class="text-center">
+            <svg class="w-16 h-16 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <p class="text-sm">Certificate Image</p>
+          </div>
+        `;
+        container.appendChild(fallbackDiv);
+      }
+    });
+    
+    // Also check if image is already failed to load
+    if (img.complete && img.naturalWidth === 0) {
+      img.dispatchEvent(new Event('error'));
+    }
+  });
+}
+
+// Initialize image error handling when DOM is loaded
+document.addEventListener('DOMContentLoaded', handleCertificateImageErrors);
+
